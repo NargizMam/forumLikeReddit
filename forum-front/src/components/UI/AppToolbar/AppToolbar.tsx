@@ -21,7 +21,7 @@ const AppToolbar = () => {
       <Toolbar>
         <Grid  container justifyContent="space-between" alignItems="center">
           <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-            <Link to="/">;;;;;;;;;</Link>
+            <Link to="/">Forum like Reddit</Link>
           </Typography>
           {user ? (
             <UserMenu user={user}/>
