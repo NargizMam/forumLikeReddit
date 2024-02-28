@@ -16,3 +16,9 @@ export interface IPost {
   image?: string;
   description?: string;
 }
+export interface PostMutation {
+  user: string,
+  title: string,
+  description?: string | null,
+  image?: string | null,
+}

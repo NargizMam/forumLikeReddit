@@ -39,3 +39,8 @@ export interface PostApi {
   image: string | null;
   createdAt: string;
 }
+export interface PostMutation {
+  title: string;
+  image: string | null;
+  description: string | null;
+}

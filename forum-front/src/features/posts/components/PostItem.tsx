@@ -33,7 +33,7 @@ const PostCard: React.FC<Props> = ({ title, image, createdAt, author}) => {
             elevation={4}
 
         >
-            <CardMedia component="img" sx={{ width: '20%' }} image={postImage} alt="Post Image" />
+            <CardMedia component="img" sx={{ width: '20%', maxHeigth: '100px'}} image={postImage} alt="Post Image" />
             <CardContent >
                 <Typography
                     color="textSecondary"

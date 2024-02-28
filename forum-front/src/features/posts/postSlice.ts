@@ -1,15 +1,17 @@
 import {PostApi} from "../../types";
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchPostsList} from "./postThunk.ts";
+import {createPost, fetchPostsList} from "./postThunk.ts";
 import {RootState} from "../../app/store.ts";
 
 interface PostState {
     posts: PostApi[];
     postsFetching: boolean;
+    postsCreating: boolean;
 }
 const initialState: PostState = {
     posts: [],
-    postsFetching: false
+    postsFetching: false,
+    postsCreating: false,
 }
 
 export const postsSlice = createSlice({
@@ -27,8 +29,18 @@ export const postsSlice = createSlice({
         builder.addCase(fetchPostsList.rejected, (state) => {
             state.postsFetching = false;
         });
+        builder.addCase(createPost.pending, (state) => {
+            state.postsFetching = true;
+        });
+        builder.addCase(createPost.fulfilled, (state) => {
+            state.postsFetching = false;
+        });
+        builder.addCase(createPost.rejected, (state) => {
+            state.postsFetching = false;
+        });
     }
 });
 export const postsReducer = postsSlice.reducer;
 export const selectPosts = (state: RootState) => state.posts.posts;
 export const selectPostsFetching = (state: RootState) => state.posts.postsFetching;
+export const selectPostsCreating = (state: RootState) => state.posts.postsCreating;

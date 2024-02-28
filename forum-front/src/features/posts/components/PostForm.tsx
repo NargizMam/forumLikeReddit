@@ -1,48 +1,56 @@
-
-const PostForm = () => {
-    return (
-        <div>
-
-        </div>
-    );
-};
-
-export default PostForm;
-
 import React, { useState } from 'react';
-import {TextField, Button, Typography, Box, Container, Paper, Grid} from '@mui/material';
+import {TextField,  Typography, Box, Container, Paper, Grid} from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import {useNavigate} from "react-router-dom";
+import { PostMutation} from "../../../types";
+import FileInput from "../../../components/UI/FileInput/FileInput.tsx";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
+import {selectUser} from "../../users/usersSlice.ts";
+import {createPost} from "../postThunk.ts";
+import {selectPostsCreating} from "../postSlice.ts";
 
-const AddPostForm: React.FC = () => {
-    const [postTitle, setPostTitle] = useState<string>('');
-    const [postDescription, setPostDescription] = useState<string>('');
-    const [postImage, setPostImage] = useState<File | null>(null);
-
-    const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPostTitle(event.target.value);
+const PostForm: React.FC = () => {
+    const user = useAppSelector(selectUser);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const creating = useAppSelector(selectPostsCreating);
+    const [state, setState] = useState<PostMutation>({
+        title: '',
+        description: '',
+        image: null,
+    });
+    const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setState(prevState => {
+            return {...prevState, [name]: value};
+        });
     };
 
-    const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPostDescription(event.target.value);
-    };
-
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files.length > 0) {
-            setPostImage(event.target.files[0]);
+    const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, files} = e.target;
+        if (files) {
+            setState(prevState => ({
+                ...prevState, [name]: files[0]
+            }));
         }
     };
 
     const isFormValid = () => {
-        return postImage !== null || postDescription.trim() !== '';
+        return state.image !== null || state.description !== '';
     };
 
-    const handleSubmit = () => {
-        if (isFormValid()) {
-            // Здесь можно добавить логику отправки данных на сервер
-            console.log('Submitted:', {
-                title: postTitle,
-                description: postDescription,
-                image: postImage,
-            });
+    const handleSubmit = async () => {
+        if (isFormValid() && user) {
+
+            const infoForAdd = {
+                post: {
+                    ...state,
+                    user: user._id
+                },
+                token: user.token
+            }
+            await dispatch(createPost(infoForAdd)).unwrap();
+            navigate('/posts');
         } else {
             console.log('Form is not valid');
         }
@@ -51,15 +59,16 @@ const AddPostForm: React.FC = () => {
     return (
         <Container component="main" maxWidth="xs">
             <Paper elevation={3} sx={{ padding: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Typography variant="h5">Add a New Post</Typography>
+                <Typography variant="h5">Add New Post</Typography>
                 <Box component="form" noValidate sx={{ mt: 3 }}>
                     <TextField
                         fullWidth
                         margin="normal"
                         label="Post Title"
                         variant="outlined"
-                        value={postTitle}
-                        onChange={handleTitleChange}
+                        value={state.title}
+                        name='title'
+                        onChange={inputChangeHandler}
                     />
                     <TextField
                         fullWidth
@@ -68,19 +77,22 @@ const AddPostForm: React.FC = () => {
                         variant="outlined"
                         multiline
                         rows={4}
-                        value={postDescription}
-                        onChange={handleDescriptionChange}
+                        name='description'
+                        required={!state.image}
+                        value={state.description}
+                        onChange={inputChangeHandler}
                     />
                     <Grid item xs>
                         <FileInput
                             label="Image"
                             name="image"
+                            require={state.description === ''}
                             onChange={fileInputChangeHandler}
                         />
                     </Grid>
-                    <Typography sx={{ mt: 1 }}>{postImage ? postImage.name : 'No image selected'}</Typography>
-                    <Button
+                    <LoadingButton
                         type="button"
+                        loading={creating}
                         fullWidth
                         variant="contained"
                         color="primary"
@@ -89,11 +101,11 @@ const AddPostForm: React.FC = () => {
                         disabled={!isFormValid()}
                     >
                         Submit
-                    </Button>
+                    </LoadingButton>
                 </Box>
             </Paper>
         </Container>
     );
 };
 
-export default AddPostForm;
+export default PostForm;
