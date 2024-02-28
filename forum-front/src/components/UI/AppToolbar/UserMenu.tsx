@@ -25,8 +25,9 @@ const UserMenu: React.FC<Props> = ({user}) => {
 
   return (
     <>
-      <Button color="inherit" onClick={handleClick}>Hello, {user.username}</Button>
+      <Button color="inherit" onClick={handleClick}>Hello, {user.username} !</Button>
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} keepMounted>
+          <MenuItem onClick={handleLogout}>Add new post</MenuItem>
           <MenuItem onClick={handleLogout}>Log out</MenuItem>
         </Menu>
     </>

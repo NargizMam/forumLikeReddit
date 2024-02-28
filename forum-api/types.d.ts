@@ -9,4 +9,10 @@ export interface UserMethods {
   checkPassword(password: string): Promise<boolean>;
   generateToken(): void;
 }
-type UserModal = Model<UserFields, {}, UserMethods>;
+type UserModel = Model<UserFields, {}, UserMethods>;
+export interface IPost {
+  user: Object.id;
+  title: string;
+  image?: string;
+  description?: string;
+}

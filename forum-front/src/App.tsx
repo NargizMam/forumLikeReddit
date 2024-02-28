@@ -3,6 +3,7 @@ import AppToolbar from './components/UI/AppToolbar/AppToolbar';
 import {Route, Routes} from 'react-router-dom';
 import Register from './features/users/Register';
 import Login from "./features/users/Login.tsx";
+import PostList from "./features/posts/PostList.tsx";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <main>
         <Container maxWidth="xl">
           <Routes>
+              <Route path='/' element={<PostList/>}/>
               <Route path='/register' element={<Register/>}/>
               <Route path='/login' element={<Login/>}/>
             <Route path="*" element={<h1>Not found</h1>} />

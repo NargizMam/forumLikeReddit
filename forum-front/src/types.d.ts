@@ -29,3 +29,13 @@ export interface RegisterResponse {
 export interface GlobalError {
   error: string
 }
+export interface PostApi {
+  _id: string;
+  user: {
+    id: string,
+    username: string
+  };
+  title: string;
+  image: string | null;
+  createdAt: string;
+}

@@ -39,7 +39,7 @@ const Login = () => {
           <LockOpenIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Log in
         </Typography>
         {error && (
           <Alert severity="error" sx={{mt:3, width:'100%'}}>
@@ -76,7 +76,7 @@ const Login = () => {
             variant="contained"
             sx={{mt: 3, mb: 2}}
           >
-            Sign Up
+            Log in
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
