@@ -1,5 +1,5 @@
 import {Button, CircularProgress, Grid, Paper, Typography} from "@mui/material";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import dayjs from "dayjs";
 import {fetchOnePostInfo} from "./postThunk.ts";
 import {useParams} from "react-router-dom";
@@ -22,7 +22,7 @@ const OnePostInfo = () => {
     const loading = useAppSelector(selectOnePostFetching);
     const commentsList = useAppSelector(selectPostsComments);
     const commentsFetching = useAppSelector(selectCommentsFetching);
-    const [showModal, setShowModal] = useState(false);
+
     let postImage;
     let dateAt;
 
