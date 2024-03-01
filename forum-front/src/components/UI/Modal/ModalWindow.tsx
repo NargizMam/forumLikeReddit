@@ -1,7 +1,8 @@
-import React from "react";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CommentsForm from "../../../features/comments/components/CommentsForm.tsx";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
+import {isShowModal, selectShowModal} from "../../../features/comments/commentsSlice.ts";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -14,23 +15,22 @@ const style = {
     boxShadow: 24,
     p: 1,
 };
-interface Props extends React.PropsWithChildren {
-    show: boolean;
-    onClose: React.MouseEventHandler;
-}
- const ModalWindow:React.FC<Props> = ({show, onClose}) => {
+
+const ModalWindow = () => {
+    const dispatch = useAppDispatch();
+    const showModal = useAppSelector(selectShowModal);
 
     return (
-     <Modal
-         open={show}
-         onClose={onClose}
-         aria-labelledby="modal-modal-title"
-         aria-describedby="modal-modal-description"
-     >
-         <Box sx={style}>
-            <CommentsForm/>
-         </Box>
-     </Modal>
+        <Modal
+            open={showModal}
+            onClose={() => dispatch(isShowModal())}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={style}>
+                <CommentsForm/>
+            </Box>
+        </Modal>
     );
 };
 

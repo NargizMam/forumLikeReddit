@@ -17,7 +17,7 @@ interface Props {
 
 }
 
-const PostCard: React.FC<Props> = ({ title, image,id, createdAt, author}) => {
+const PostCard: React.FC<Props> = ({title, image, id, createdAt, author}) => {
     const user = useAppSelector(selectUser);
     const dateAt = dayjs(createdAt).locale('ru').format('D MMMM, YYYY HH:mm:ss');
     let postImage = imageNotAvailable;
@@ -33,12 +33,13 @@ const PostCard: React.FC<Props> = ({ title, image,id, createdAt, author}) => {
                 },
                 borderRadius: '20px',
                 display: 'flex',
+                justifyContent: 'space-around'
             }}
-            elevation={4}
+            elevation={1}
 
         >
-            <CardMedia component="img" sx={{ width: '30%', height: '150px'}} image={postImage} alt="Post Image" />
-            <CardContent >
+            <CardMedia component="img" sx={{width: '30%', height: '150px'}} image={postImage} alt="Post Image"/>
+            <CardContent>
                 <Typography
                     color="textSecondary"
                     sx={{
@@ -49,7 +50,7 @@ const PostCard: React.FC<Props> = ({ title, image,id, createdAt, author}) => {
                         WebkitLineClamp: 2,
                     }}
                     variant="h5"
-                    >{title}</Typography>
+                >{title}</Typography>
                 <Box
                     sx={{
                         alignItems: 'center',
@@ -64,8 +65,8 @@ const PostCard: React.FC<Props> = ({ title, image,id, createdAt, author}) => {
                             display: 'flex',
                         }}
                     >
-                    <Typography variant="subtitle2">{`By ${author}`}</Typography>
-                        <Typography variant="subtitle2" sx={{ ml: 2 }}>
+                        <Typography variant="subtitle2">{`By ${author}`}</Typography>
+                        <Typography variant="subtitle2" sx={{ml: 2}}>
                             {dateAt}
                         </Typography>
                     </Box>
@@ -73,12 +74,12 @@ const PostCard: React.FC<Props> = ({ title, image,id, createdAt, author}) => {
                 <Typography
                     align="right"
                     color="textSecondary"
-                    sx={{ flexGrow: 1 }}
+                    sx={{flexGrow: 1}}
                     variant="body2"
                 >
                     {` comments`}
                 </Typography>
-                {user ? <Button component={NavLink} to ={`posts/${id}`}>Просмотреть полностью</Button>: null}
+                {user ? <Button component={NavLink} to={`posts/${id}`}>Просмотреть полностью</Button> : null}
             </CardContent>
         </Card>
     );

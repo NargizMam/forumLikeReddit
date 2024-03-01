@@ -10,7 +10,7 @@ import Loading from "../../components/UI/Spinner/Loading.tsx";
 import imageNotAvailable from "../../assets/images/noImage.png";
 import {apiURL} from "../../constants.ts";
 import ModalWindow from "../../components/UI/Modal/ModalWindow.tsx";
-import {selectCommentsFetching, selectPostsComments} from "../comments/commentsSlice.ts";
+import {isShowModal, selectCommentsFetching, selectPostsComments} from "../comments/commentsSlice.ts";
 import CommentItem from "../comments/components/CommentItem.tsx";
 import {fetchPostsComments} from "../comments/commentsThunk.ts";
 
@@ -48,14 +48,14 @@ const OnePostInfo = () => {
     }
     return (
         <>
-        <ModalWindow show={showModal} onClose={() => setShowModal(false)}/>
-        <Grid container>
-            {!postInfo ? (
-                <h1>Пост возможно был удален</h1>
+        <ModalWindow/>
+            <Grid container sx={{maxWidth: "70%", margin: 'auto'}}>
+                {!postInfo ? (
+                    <h1>Пост возможно был удален</h1>
             ) : loading ? (
                 <Loading />
             ) : (
-                <Paper elevation={3} sx={{p:2, mb: 2}}>
+                <Paper sx={{p:2, mb: 2}}>
                     <img src={postImage} alt={postInfo.title} />
                     <Typography variant="h4" sx={{ ml: 2 }}>
                         {postInfo.title}
@@ -69,11 +69,11 @@ const OnePostInfo = () => {
                             {dateAt}
                         </Typography>
                     </Grid>
-                    {user ? <Button onClick={() =>setShowModal(true)}>Добавить комментарий</Button>: null}
+                    {user ? <Button onClick={() =>dispatch(isShowModal())}>Добавить комментарий</Button>: null}
                 </Paper>
             )}
-                <Grid width='100%'>
-                {!commentsFetching && <CircularProgress /> }
+                <Grid width='70%'>
+                {commentsFetching && <CircularProgress /> }
 
                 {!commentsList ? null :
                     (

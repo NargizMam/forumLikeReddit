@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
 import {useParams} from "react-router-dom";
 import {selectUser} from "../../users/usersSlice.ts";
-import {selectCommentsCreating} from "../commentsSlice.ts";
+import {isShowModal, selectCommentsCreating} from "../commentsSlice.ts";
 import {createComment} from "../commentsThunk.ts";
 
 
@@ -12,7 +12,6 @@ const CommentsForm = () => {
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
     const commentsCreating = useAppSelector(selectCommentsCreating);
-    console.log(commentsCreating)
     const {id} = useParams();
     const [state, setState] = useState({
         message: ''
@@ -25,22 +24,24 @@ const CommentsForm = () => {
         });
     };
     const handleSubmit = () => {
-        if(id && user){
+        if (id && user) {
             const postInfoProps = {
-                comment:{
+                comment: {
                     post: id,
                     message: state.message,
                 },
                 token: user.token
             }
-            dispatch(createComment(postInfoProps));
+            dispatch(createComment(postInfoProps)).unwrap();
+            setState({message: ''});
+            dispatch(isShowModal());
         }
     }
     return (
         <Container component="main" maxWidth="xs">
-            <Paper elevation={3} sx={{ padding: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Paper elevation={3} sx={{padding: 3, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <Typography variant="h5">Add New Comment</Typography>
-                <Box component="form" noValidate sx={{ mt: 3 }}>
+                <Box component="form" noValidate sx={{mt: 3}}>
                     <TextField
                         fullWidth
                         margin="normal"
@@ -59,7 +60,7 @@ const CommentsForm = () => {
                         fullWidth
                         variant="contained"
                         color="primary"
-                        sx={{ mt: 3 }}
+                        sx={{mt: 3}}
                         onClick={handleSubmit}
                         disabled={state.message === ''}
                     >

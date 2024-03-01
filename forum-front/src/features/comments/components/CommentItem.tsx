@@ -6,7 +6,7 @@ interface Props {
     author: string;
 }
 
-const CommentItem: React.FC<Props> = ({  author, message}) => {
+const CommentItem: React.FC<Props> = ({author, message}) => {
     return (
         <Card
             sx={{
@@ -18,7 +18,7 @@ const CommentItem: React.FC<Props> = ({  author, message}) => {
             elevation={4}
 
         >
-            <CardContent >
+            <CardContent>
                 <Typography
                     color="textSecondary"
                     sx={{
@@ -30,14 +30,14 @@ const CommentItem: React.FC<Props> = ({  author, message}) => {
                     }}
                     variant="h5"
                 >{message}</Typography>
-                    <Box
-                        sx={{
-                            alignItems: 'center',
-                            display: 'flex',
-                        }}
-                    >
-                        <Typography variant="subtitle2">{`By ${author}`}</Typography>
-                    </Box>
+                <Box
+                    sx={{
+                        alignItems: 'center',
+                        display: 'flex',
+                    }}
+                >
+                    <Typography variant="subtitle2">{`By ${author}`}</Typography>
+                </Box>
             </CardContent>
         </Card>
     );

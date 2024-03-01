@@ -10,6 +10,7 @@ interface PostState {
     onePostFetching: boolean;
     postsCreating: boolean;
 }
+
 const initialState: PostState = {
     posts: [],
     onePost: null,

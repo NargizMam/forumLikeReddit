@@ -1,35 +1,35 @@
-import { NavLink } from 'react-router-dom';
-import { AppBar, Grid, styled, Toolbar, Typography } from '@mui/material';
-import { useAppSelector } from '../../app/hooks.ts';
-import { selectUser } from '../../features/users/usersSlice.ts';
+import {NavLink} from 'react-router-dom';
+import {AppBar, Grid, styled, Toolbar, Typography} from '@mui/material';
+import {useAppSelector} from '../../app/hooks.ts';
+import {selectUser} from '../../features/users/usersSlice.ts';
 import UserMenu from './UserMenu.tsx';
 import AnonymousMenu from './AnonymousMenu.tsx';
 
 const Link = styled(NavLink)({
-  color: 'inherit',
-  textDecoration: 'none',
-  '&:hover': {
-    color: 'inherit'
-  },
+    color: 'inherit',
+    textDecoration: 'none',
+    '&:hover': {
+        color: 'inherit'
+    },
 });
 
 const AppToolbar = () => {
-  const user = useAppSelector(selectUser);
+    const user = useAppSelector(selectUser);
 
-  return (
-    <AppBar position="sticky" sx={{mb: 2}}>
-      <Toolbar>
-        <Grid  container justifyContent="space-between" alignItems="center">
-          <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-            <Link to="/">Forum like Reddit</Link>
-          </Typography>
-          {user ? (
-            <UserMenu user={user}/>
-          ) : <AnonymousMenu/>}
-        </Grid>
-      </Toolbar>
-    </AppBar>
-  );
+    return (
+        <AppBar position="sticky" sx={{mb: 2}}>
+            <Toolbar>
+                <Grid container justifyContent="space-between" alignItems="center">
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                        <Link to="/">Forum like Reddit</Link>
+                    </Typography>
+                    {user ? (
+                        <UserMenu user={user}/>
+                    ) : <AnonymousMenu/>}
+                </Grid>
+            </Toolbar>
+        </AppBar>
+    );
 };
 
 export default AppToolbar;

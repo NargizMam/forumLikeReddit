@@ -4,6 +4,7 @@ import {useEffect} from "react";
 import {fetchPostsList} from "./postThunk.ts";
 import PostItem from "./components/PostItem.tsx";
 import Spinner from "../../components/UI/Spinner/Loading.tsx";
+import {Grid} from "@mui/material";
 
 const PostList = () => {
     const dispatch = useAppDispatch();
@@ -24,9 +25,10 @@ const PostList = () => {
         />
     ));
     return (
-        <>
-            {loading ? <Spinner/> :allPostsLIst}
-        </>
+        <Grid sx={{margin: 'auto', maxWidth: '65%'}}>
+            {loading ? <Spinner/> : allPostsLIst}
+
+        </Grid>
     );
 };
 

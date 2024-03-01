@@ -15,7 +15,7 @@ const App = () => {
         <AppToolbar/>
       </header>
       <main>
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" >
           <Routes>
               <Route path='/' element={<PostList/>}/>
               <Route path='/posts/:id' element={<OnePostInfo/>}/>
