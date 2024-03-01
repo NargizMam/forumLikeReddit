@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { User } from '../../../types';
+import { User } from '../../types';
 import { Button, Menu, MenuItem } from '@mui/material';
-import { useAppDispatch } from '../../../app/hooks';
-import { logout } from '../../../features/users/usersThunk';
+import { useAppDispatch } from '../../app/hooks.ts';
+import { logout } from '../../features/users/usersThunk.ts';
 import {NavLink} from "react-router-dom";
 
 interface Props {

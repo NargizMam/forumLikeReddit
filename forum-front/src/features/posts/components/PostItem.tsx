@@ -1,8 +1,11 @@
 import React from 'react';
-import {Box, Card, CardContent, CardMedia, Typography,} from '@mui/material';
+import {Box, Button, Card, CardContent, CardMedia, Typography,} from '@mui/material';
 import dayjs from "dayjs";
 import imageNotAvailable from '../../../assets/images/noImage.png';
 import {apiURL} from "../../../constants.ts";
+import {useAppSelector} from "../../../app/hooks.ts";
+import {selectUser} from "../../users/usersSlice.ts";
+import {NavLink} from "react-router-dom";
 
 interface Props {
     id: string;
@@ -14,7 +17,8 @@ interface Props {
 
 }
 
-const PostCard: React.FC<Props> = ({ title, image, createdAt, author}) => {
+const PostCard: React.FC<Props> = ({ title, image,id, createdAt, author}) => {
+    const user = useAppSelector(selectUser);
     const dateAt = dayjs(createdAt).locale('ru').format('D MMMM, YYYY HH:mm:ss');
     let postImage = imageNotAvailable;
 
@@ -33,7 +37,7 @@ const PostCard: React.FC<Props> = ({ title, image, createdAt, author}) => {
             elevation={4}
 
         >
-            <CardMedia component="img" sx={{ width: '20%', maxHeigth: '100px'}} image={postImage} alt="Post Image" />
+            <CardMedia component="img" sx={{ width: '30%', height: '150px'}} image={postImage} alt="Post Image" />
             <CardContent >
                 <Typography
                     color="textSecondary"
@@ -74,6 +78,7 @@ const PostCard: React.FC<Props> = ({ title, image, createdAt, author}) => {
                 >
                     {` comments`}
                 </Typography>
+                {user ? <Button component={NavLink} to ={`posts/${id}`}>Просмотреть полностью</Button>: null}
             </CardContent>
         </Card>
     );

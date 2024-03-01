@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.ts",
+    "typecheck": "tsc --noemit",
+    "lint": "eslint \"**/*.ts\"",
     "check": "npx prettier . --check",
     "fix": "npx prettier . --write",
     "seed": "ts-node fixtures.ts"

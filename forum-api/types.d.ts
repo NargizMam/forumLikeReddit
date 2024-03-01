@@ -22,3 +22,8 @@ export interface PostMutation {
   description?: string | null,
   image?: string | null,
 }
+export interface CommentMutation {
+  user: string,
+  post: string,
+  message: string
+}

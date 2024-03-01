@@ -39,7 +39,7 @@
     animation-delay: -0.8s;
 }
 
-@-webkit-keyframes stretchdelay {
+@-webkit-keyframes stretchDelay {
     0%,
     40%,
     100% {
@@ -50,7 +50,7 @@
     }
 }
 
-@keyframes stretchdelay {
+@keyframes stretchDelay {
     0%,
     40%,
     100% {

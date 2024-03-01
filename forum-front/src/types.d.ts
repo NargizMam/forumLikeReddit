@@ -44,3 +44,22 @@ export interface PostMutation {
   image: string | null;
   description: string | null;
 }
+export interface PostsProps {
+  post: PostMutation;
+  token: string;
+}
+export interface OnePostProps {
+  _id: string;
+  token: string;
+}
+export interface OnePostApi {
+  _id: string;
+  user: {
+    id: string,
+    username: string
+  };
+  description?: string;
+  title: string;
+  image?: string | null;
+  createdAt: string;
+}

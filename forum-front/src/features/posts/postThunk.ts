@@ -1,15 +1,19 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {PostApi, PostMutation} from "../../types";
+import {OnePostApi, OnePostProps, PostApi, PostMutation, PostsProps} from "../../types";
 import axiosApi from "../../axiosApi.ts";
 
-interface PostsProps {
-    post: PostMutation;
-    token: string;
-}
+
 export const fetchPostsList = createAsyncThunk<PostApi[]>(
     'posts/fetch',
     async () => {
         const response = await axiosApi.get('/posts');
+        return response.data;
+    }
+);
+export const fetchOnePostInfo = createAsyncThunk<OnePostApi, OnePostProps>(
+    'posts/fetchOnePost',
+    async ({token, _id}) => {
+        const response = await axiosApi.get(`/posts/${_id}`, { headers: { Authorization: `_bearer ${token}` }});
         return response.data;
     }
 );

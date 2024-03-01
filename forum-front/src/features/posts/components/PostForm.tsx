@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {TextField,  Typography, Box, Container, Paper, Grid} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import {useNavigate} from "react-router-dom";
@@ -19,6 +19,12 @@ const PostForm: React.FC = () => {
         description: '',
         image: null,
     });
+    useEffect(() => {
+        if(!user){
+            navigate('/');
+        }
+    }, [user]);
+
     const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setState(prevState => {
@@ -43,10 +49,7 @@ const PostForm: React.FC = () => {
         if (isFormValid() && user) {
 
             const infoForAdd = {
-                post: {
-                    ...state,
-                    user: user._id
-                },
+                post: state,
                 token: user.token
             }
             await dispatch(createPost(infoForAdd)).unwrap();

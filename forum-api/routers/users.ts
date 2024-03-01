@@ -23,6 +23,7 @@ usersRouter.post('/', async (req, res, next) => {
 usersRouter.post('/sessions', async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
+    console.log(user)
     if (!user) {
       return res.status(422).send({ error: 'Логин или пароль введен неверно!' });
     }
