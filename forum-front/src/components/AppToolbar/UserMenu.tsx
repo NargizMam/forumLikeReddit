@@ -3,13 +3,14 @@ import { User } from '../../types';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { useAppDispatch } from '../../app/hooks.ts';
 import { logout } from '../../features/users/usersThunk.ts';
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 
 interface Props {
   user: User;
 }
 const UserMenu: React.FC<Props> = ({user}) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -21,7 +22,8 @@ const UserMenu: React.FC<Props> = ({user}) => {
   };
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout()).unwrap();
+    navigate('/');
   };
 
   return (

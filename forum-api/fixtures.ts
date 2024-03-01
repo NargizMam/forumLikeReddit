@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import config from "./config";
 import User from "./models/User";
 import Post from "./models/Post";
+import Comment from "./models/Comment";
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
     try {
@@ -14,7 +15,7 @@ const dropCollection = async (db: mongoose.Connection, collectionName: string) =
 const run = async () => {
     await mongoose.connect(config.mongoose.db);
     const db = mongoose.connection;
-    const collections = ['users', 'posts'];
+    const collections = ['users', 'posts', 'comments'];
     for (const collectionName of collections) {
         await dropCollection(db, collectionName)
     }
@@ -47,7 +48,29 @@ const run = async () => {
             title: 'Angel music',
             description: 'Música Angelical Para Atraer Ángeles - Sanar Todo Daño del Cuerpo, del Alma y del Espíritu,',
         },
-    )
+    );
+    const [] = await Comment.create(
+        {
+            user: user2.id,
+            post: post1.id,
+            message: ' Достаточно тяжело'
+        },
+        {
+            user: user1.id,
+            post: post1.id,
+            message: ' Легко'
+        },
+        {
+            user: user2.id,
+            post: post2.id,
+            message: ' Fine'
+        },
+        {
+            user: user2.id,
+            post: post2.id,
+            message: ' Good',
+        }
+    );
 
     await db.close();
 };

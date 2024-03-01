@@ -71,9 +71,10 @@ export interface CommentProps {
   token: string;
   comment: CommentMutation;
 }
+
 export interface CommentsApi {
-  id: string,
-  author: {
+  _id: string,
+  user: {
     username: string
   },
   message: string,

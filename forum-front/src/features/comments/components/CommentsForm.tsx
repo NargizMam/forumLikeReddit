@@ -11,7 +11,8 @@ import {createComment} from "../commentsThunk.ts";
 const CommentsForm = () => {
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
-    const creating = useAppSelector(selectCommentsCreating);
+    const commentsCreating = useAppSelector(selectCommentsCreating);
+    console.log(commentsCreating)
     const {id} = useParams();
     const [state, setState] = useState({
         message: ''
@@ -32,7 +33,6 @@ const CommentsForm = () => {
                 },
                 token: user.token
             }
-            console.log(postInfoProps)
             dispatch(createComment(postInfoProps));
         }
     }
@@ -55,7 +55,7 @@ const CommentsForm = () => {
                     />
                     <LoadingButton
                         type="button"
-                        loading={creating}
+                        loading={commentsCreating}
                         fullWidth
                         variant="contained"
                         color="primary"
