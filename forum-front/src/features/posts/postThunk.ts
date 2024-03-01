@@ -33,4 +33,4 @@ export const createPost = createAsyncThunk<void, PostsProps>(
         const response =  await axiosApi.post('/posts', formData, { headers: { Authorization: `_bearer ${token}` }});
         return response.data;
     }
-)
+);

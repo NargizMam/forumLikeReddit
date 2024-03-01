@@ -63,3 +63,19 @@ export interface OnePostApi {
   image?: string | null;
   createdAt: string;
 }
+export interface CommentMutation {
+  post: string;
+  message: string;
+}
+export interface CommentProps {
+  token: string;
+  comment: CommentMutation;
+}
+export interface CommentsApi {
+  id: string,
+  author: {
+    username: string
+  },
+  message: string,
+  post: string
+}

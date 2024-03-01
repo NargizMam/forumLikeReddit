@@ -2,16 +2,17 @@ import {Box, Container, Paper, TextField, Typography} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
 import React, {useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
-import {useNavigate} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {selectUser} from "../../users/usersSlice.ts";
+import {selectCommentsCreating} from "../commentsSlice.ts";
+import {createComment} from "../commentsThunk.ts";
 
-interface Props {
-    postId: string;
-}
+
 const CommentsForm = () => {
     const dispatch = useAppDispatch();
-    const navigate= useNavigate();
     const user = useAppSelector(selectUser);
+    const creating = useAppSelector(selectCommentsCreating);
+    const {id} = useParams();
     const [state, setState] = useState({
         message: ''
     });
@@ -22,7 +23,19 @@ const CommentsForm = () => {
             return {...prevState, [name]: value};
         });
     };
-
+    const handleSubmit = () => {
+        if(id && user){
+            const postInfoProps = {
+                comment:{
+                    post: id,
+                    message: state.message,
+                },
+                token: user.token
+            }
+            console.log(postInfoProps)
+            dispatch(createComment(postInfoProps));
+        }
+    }
     return (
         <Container component="main" maxWidth="xs">
             <Paper elevation={3} sx={{ padding: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -42,13 +55,13 @@ const CommentsForm = () => {
                     />
                     <LoadingButton
                         type="button"
-                        // loading={creating}
+                        loading={creating}
                         fullWidth
                         variant="contained"
                         color="primary"
                         sx={{ mt: 3 }}
-                        // onClick={handleSubmit}
-                        disabled={)}
+                        onClick={handleSubmit}
+                        disabled={state.message === ''}
                     >
                         Создать
                     </LoadingButton>

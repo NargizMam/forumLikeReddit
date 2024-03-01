@@ -5,7 +5,6 @@ import {useEffect, useState} from "react";
 import {fetchOnePostInfo} from "./postThunk.ts";
 import {useParams} from "react-router-dom";
 import {selectUser} from "../users/usersSlice.ts";
-import {OnePostProps} from "../../types";
 import Loading from "../../components/UI/Spinner/Loading.tsx";
 import dayjs from "dayjs";
 import imageNotAvailable from "../../assets/images/noImage.png";
@@ -20,19 +19,17 @@ const OnePostInfo = () => {
     const loading = useAppSelector(selectOnePostFetching);
     const [showModal, setShowModal] = useState(false);
 
-
-    let postInfoProps: OnePostProps;
     let postImage;
     let dateAt;
 
     useEffect(() => {
         if(id && user){
-            postInfoProps = {
+            const postInfoProps = {
                 _id: id,
                 token: user.token
             }
+            dispatch(fetchOnePostInfo(postInfoProps));
         }
-        dispatch(fetchOnePostInfo(postInfoProps));
     }, [dispatch]);
 
     if(postInfo) {
@@ -44,7 +41,7 @@ const OnePostInfo = () => {
     }
     return (
         <>
-        <ModalWindow open={showModal}/>
+        <ModalWindow show={showModal} onClose={() => setShowModal(false)}/>
         <Grid container>
             {!postInfo ? (
                 <h1>Пост возможно был удален</h1>
