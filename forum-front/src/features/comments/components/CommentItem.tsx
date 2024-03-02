@@ -1,12 +1,16 @@
 import React from 'react';
 import {Box, Card, CardContent, Typography,} from '@mui/material';
+import dayjs from "dayjs";
 
 interface Props {
     message: string;
     author: string;
+    createdAt: string;
 }
 
-const CommentItem: React.FC<Props> = ({author, message}) => {
+const CommentItem: React.FC<Props> = ({author, message, createdAt}) => {
+    const dateAt = dayjs(createdAt).locale('ru').format('D MMMM, YYYY HH:mm:ss');
+
     return (
         <Card
             sx={{
@@ -38,6 +42,8 @@ const CommentItem: React.FC<Props> = ({author, message}) => {
                 >
                     <Typography variant="subtitle2">{`By ${author}`}</Typography>
                 </Box>
+                <Typography variant="subtitle2">{dateAt}</Typography>
+
             </CardContent>
         </Card>
     );

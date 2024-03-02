@@ -73,10 +73,11 @@ export interface CommentProps {
 }
 
 export interface CommentsApi {
-  _id: string,
+  _id: string;
   user: {
     username: string
-  },
-  message: string,
-  post: string
+  };
+  message: string;
+  post: string;
+  createdAt: string;
 }

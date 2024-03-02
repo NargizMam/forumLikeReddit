@@ -34,9 +34,10 @@ const OnePostInfo = () => {
             }
             dispatch(fetchOnePostInfo(postInfoProps));
             dispatch(fetchPostsComments(postInfoProps));
-
         }
-    }, [dispatch]);
+
+    }, [dispatch, id, user]);
+
 
 
     if(postInfo) {
@@ -82,6 +83,7 @@ const OnePostInfo = () => {
                                 key={comment._id}
                                 message={comment.message}
                                 author={comment.user.username}
+                                createdAt={comment.createdAt}
                             />
                         ))
                     )}

@@ -17,6 +17,7 @@ const CommentsForm = () => {
         message: ''
     });
 
+
     const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setState(prevState => {

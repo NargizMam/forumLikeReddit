@@ -53,7 +53,7 @@ const PostForm: React.FC = () => {
                 token: user.token
             }
             await dispatch(createPost(infoForAdd)).unwrap();
-            navigate('/posts');
+            navigate('/');
         } else {
             console.log('Form is not valid');
         }
