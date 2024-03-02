@@ -38,6 +38,7 @@ export interface PostApi {
   title: string;
   image: string | null;
   createdAt: string;
+  commentsCount: number;
 }
 export interface PostMutation {
   title: string;

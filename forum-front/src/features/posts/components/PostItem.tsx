@@ -13,11 +13,11 @@ interface Props {
     author: string;
     image: string | null;
     createdAt: string;
-    // commentCount: number;
+    commentsCount: number;
 
 }
 
-const PostCard: React.FC<Props> = ({title, image, id, createdAt, author}) => {
+const PostCard: React.FC<Props> = ({title, image, id, createdAt, author, commentsCount}) => {
     const user = useAppSelector(selectUser);
     const dateAt = dayjs(createdAt).locale('ru').format('D MMMM, YYYY HH:mm:ss');
     let postImage = imageNotAvailable;
@@ -77,7 +77,7 @@ const PostCard: React.FC<Props> = ({title, image, id, createdAt, author}) => {
                     sx={{flexGrow: 1}}
                     variant="body2"
                 >
-                    {` comments`}
+                    {`${commentsCount} комментариев`}
                 </Typography>
                 {user ? <Button component={NavLink} to={`posts/${id}`}>Просмотреть полностью</Button> : null}
             </CardContent>

@@ -14,6 +14,7 @@ const PostList = () => {
     useEffect(() => {
         dispatch(fetchPostsList());
     }, []);
+
     let allPostsLIst = postsLIst.map(post => (
         <PostItem
             key={post._id}
@@ -22,6 +23,7 @@ const PostList = () => {
             author={post.user.username}
             image={post.image}
             createdAt={post.createdAt}
+            commentsCount={post.commentsCount}
         />
     ));
     return (

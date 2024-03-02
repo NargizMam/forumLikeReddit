@@ -1,19 +1,28 @@
 import {Router} from "express";
-import Post from "../models/Post";
 import auth, {RequestWithUser} from "../middleware/auth";
 import {imagesUpload} from "../multer";
 import mongoose, {Types} from "mongoose";
 import {PostMutation} from "../types";
+import Post from "../models/Post";
+import Comment from "../models/Comment";
 
 const postsRouter = Router();
 postsRouter.get('/', async (req, res, next) => {
     try{
         const postsList = await Post.find().select('-description').populate('user', 'username');
-        res.send(postsList)
+        const postsListWithCount = await Promise.all(postsList.map(async (post) => {
+            const commentsCount = await Comment.countDocuments({ post: post._id });
+            return  {
+                ...post.toObject(),
+                commentsCount,
+            };
+        }));
+        res.send(postsListWithCount)
     } catch (e) {
         return next(e);
     }
 });
+
 postsRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => {
     try{
         let _id: Types.ObjectId;
@@ -23,7 +32,7 @@ postsRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => {
             return res.status(404).send({error: 'Wrong ObjectId!'});
         }
         const post = await Post.findById(_id).populate('user', 'username');
-        console.log(post)
+
         if(!post){
             return res.status(404).send({error: 'Not found!'});
         }

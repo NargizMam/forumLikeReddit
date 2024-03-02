@@ -27,3 +27,14 @@ export interface CommentMutation {
   post: string,
   message: string
 }
+  export interface PostApi {
+    _id: string;
+    user: {
+      id: string,
+      username: string
+    };
+    title: string;
+    image: string | null;
+    createdAt: string;
+    commentsCount: number;
+  }
