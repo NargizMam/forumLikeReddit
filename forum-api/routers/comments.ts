@@ -10,7 +10,7 @@ commentsRouter.get('/', auth, async (req, res, next) => {
     try {
         if (req.query.post) {
             const postsComments = await Comment.find({'post': req.query.post}).sort({createdAt: -1}).populate('user', 'username');
-            res.send(postsComments);
+           return  res.send(postsComments);
         }
         return res.send('Нет комментариев')
     } catch (e) {
